@@ -23,7 +23,7 @@ export default function Footer(props) {
               </a>
             </ListItem>
             <ListItem className={classes.inlineBlock}>
-              <a href="http://www.etherhoops.com" className={classes.block}>
+              <a href="#company" className={classes.block}>
                 Ether Hoops
               </a>
             </ListItem>

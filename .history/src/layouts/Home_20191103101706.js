@@ -14,20 +14,17 @@ import Footer from "components/Footer/Footer.js";
 import Sidebar from "components/Sidebar/Sidebar.js";
 import PlayerContainer from "components/Sidebar/PlayerContainer.js";
 import GridContainer from "components/Grid/GridContainer.js";
+import Lootbox from "layouts/LootBox.js";
 
 import FixedPlugin from "components/FixedPlugin/FixedPlugin.js";
 import Button from "components/CustomButtons/Button.js";
 import routes from "routes.js";
 import Spinner from "./Spinner.js";
-import GridItem from "components/Grid/GridItem.js";
-import Card from "components/Card/Card.js";
-import CardHeader from "components/Card/CardHeader.js";
-import CardBody from "components/Card/CardBody.js";
+
 import styles from "assets/jss/material-dashboard-react/layouts/adminStyle.js";
 import "assets/css/material-dashboard-react.css";
-import CardFooter from "components/Card/CardFooter.js";
-import bgImage from "assets/img/bg1.jpg";
-import lootbox from "assets/img/loot-box.png";
+
+import bgImage from "assets/img/bg2.jpg";
 import logo from "assets/img/reactlogo.png";
 let ps;
 
@@ -44,22 +41,22 @@ export default function Admin({ ...rest }) {
   const [fixedClasses, setFixedClasses] = useState("dropdown show");
   const [mobileOpen, setMobileOpen] = useState(false);
 
-  const [loot, setLoot] = useState([]);
+  const [players, setPlayers] = useState([]);
   const [loading, setLoading] = useState(null);
   const loadBlockchainData = async () => {
     const web3 = new Web3(Web3.givenProvider || "http://localhost:8545");
     const accounts = await web3.eth.getAccounts();
     // setAccounts({ account: accounts[0] });
   };
-  const getLootBox = async () => {
+  const getPlayers = async () => {
     setLoading(true);
     const res = await axios.get(
-      `https://nameless-eyrie-55441.herokuapp.com/api/players`
+      `https://nameless-eyrie-55441.herokuapp.com/api/splayer`
     );
-    setLoot(res.data);
+
+    setPlayers(res.data);
     setLoading(false);
   };
-
   const handleImageClick = image => {
     setImage(image);
   };
@@ -84,7 +81,14 @@ export default function Admin({ ...rest }) {
       setMobileOpen(false);
     }
   };
-  // initialize and destroy the PerfectScrollbar plugin
+
+  const onClick = () => {
+    getPlayers();
+  };
+
+  const buyLootBox = () => {
+    getPlayers();
+  };
   useEffect(() => {
     loadBlockchainData();
     if (navigator.platform.indexOf("Win") > -1) {
@@ -104,12 +108,6 @@ export default function Admin({ ...rest }) {
       window.removeEventListener("resize", resizeFunction);
     };
   }, [mainPanel]);
-
-  const revealLoot = e => {
-    e.preventDefault();
-    const el = e.target.parentNode.parentNode.firstChild;
-    el.classList.add("active");
-  };
 
   return (
     <div className={classes.wrapper}>
@@ -132,63 +130,41 @@ export default function Admin({ ...rest }) {
         />
         <div className={classes.content}>
           <GridContainer>
-            <GridItem>
-              <div className="flip-card">
-                <div className="flip-card-inner">
-                  <div className="flip-card-front">
-                    <img src={lootbox} alt="Avatar" />
-                  </div>
-                  <div className="flip-card-back">
-                    <img
-                      src="https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/1628366.png"
-                      alt="Avatar"
-                    />
-                    <h4 className="dark-color">Lonzo Ball</h4>
-                  </div>
-                </div>
-              </div>
-              <Button className="button-git" onClick={e => revealLoot(e)}>
-                Reveal Loot!
+            <div className="dash-nav">
+              <Button color="white" aria-label="edit" onClick={onClick}>
+                Load Players
               </Button>
-            </GridItem>
-            <GridItem>
-              <div className="flip-card">
-                <div className="flip-card-inner">
-                  <div className="flip-card-front">
-                    <img src={lootbox} alt="Avatar" />
-                  </div>
-                  <div className="flip-card-back">
-                    <img
-                      src="https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/202681.png"
-                      alt="Avatar"
-                    />
-                    <h4 className="dark-color">Kyrie Irving</h4>
-                  </div>
-                </div>
-              </div>
-              <Button className="button-git" onClick={e => revealLoot(e)}>
-                Reveal Loot!
+
+              <Button className="loot-gold" aria-label="edit" path="/home">
+                Buy Loot Box
               </Button>
-            </GridItem>
-            <GridItem>
-              <div className="flip-card">
-                <div className="flip-card-inner">
-                  <div className="flip-card-front">
-                    <img src={lootbox} alt="Avatar" />
-                  </div>
-                  <div className="flip-card-back">
-                    <img
-                      src="https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/2544.png"
-                      alt="Avatar"
-                    />
-                    <h4 className="dark-color">LeBron James</h4>
-                  </div>
-                </div>
-              </div>
-              <Button className="button-git" onClick={e => revealLoot(e)}>
-                Reveal Loot!
-              </Button>
-            </GridItem>
+            </div>
+          </GridContainer>
+          {loading ? (
+            <GridContainer>
+              <Spinner></Spinner>
+            </GridContainer>
+          ) : (
+            <GridContainer>
+              <PlayerContainer name players={players}></PlayerContainer>
+            </GridContainer>
+          )}
+          <GridContainer>
+            <Switch>
+              {routes.map((prop, key) => {
+                const path = prop.path;
+                return (
+                  <Route
+                    path={path}
+                    component={prop.component}
+                    key={key}
+                    name
+                    players={players}
+                  />
+                );
+              })}
+              {/* <Redirect from="/admin" to="/admin/dashboard" /> */}
+            </Switch>
           </GridContainer>
         </div>
         {getRoute() ? <Footer /> : null}

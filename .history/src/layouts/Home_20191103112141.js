@@ -208,7 +208,7 @@ export default function Admin({ ...rest }) {
               <Card chart>
                 <CardHeader color="danger">
                   <h2>
-                    The World's first <strong>NBA</strong>
+                    The World's first<strong>NBA</strong>
                   </h2>
                   <h3> fantasy league on the Blockchain.</h3>
                 </CardHeader>

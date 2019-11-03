@@ -25,7 +25,7 @@ import Spinner from "./Spinner.js";
 import styles from "assets/jss/material-dashboard-react/layouts/adminStyle.js";
 import "assets/css/material-dashboard-react.css";
 
-import bgImage from "assets/img/bg1.jpg";
+import bgImage from "assets/img/bg2.jpg";
 import logo from "assets/img/reactlogo.png";
 
 // react plugin for creating charts
@@ -164,33 +164,7 @@ export default function Admin({ ...rest }) {
           {...rest}
         />
         <div className={classes.content}>
-          {loading ? (
-            <GridContainer>
-              <Spinner></Spinner>
-            </GridContainer>
-          ) : (
-            <GridContainer>
-              <PlayerContainer name players={players}></PlayerContainer>
-            </GridContainer>
-          )}
           <GridContainer>
-            <Switch>
-              {routes.map((prop, key) => {
-                const path = prop.path;
-                return (
-                  <Route
-                    path={path}
-                    component={prop.component}
-                    key={key}
-                    name
-                    players={players}
-                  />
-                );
-              })}
-              {/* <Redirect from="/admin" to="/admin/dashboard" /> */}
-            </Switch>
-          </GridContainer>
-          <GridContainer class="main-home-content">
             <div className="dash-nav">
               <Button color="white" aria-label="edit" onClick={onClick}>
                 Load Players
@@ -207,10 +181,8 @@ export default function Admin({ ...rest }) {
             <GridContainer>
               <Card chart>
                 <CardHeader color="danger">
-                  <h2>
-                    The World's first <strong>NBA</strong>
-                  </h2>
-                  <h3> fantasy league on the Blockchain.</h3>
+                  <h2>The World's </h2>
+                  <h3>first fantasy league on the Blockchain.</h3>
                 </CardHeader>
               </Card>
               <GridItem xs={12} sm={12} md={6}>
@@ -271,6 +243,32 @@ export default function Admin({ ...rest }) {
                 </Card>
               </GridItem>
             </GridContainer>
+          </GridContainer>
+          {loading ? (
+            <GridContainer>
+              <Spinner></Spinner>
+            </GridContainer>
+          ) : (
+            <GridContainer>
+              <PlayerContainer name players={players}></PlayerContainer>
+            </GridContainer>
+          )}
+          <GridContainer>
+            <Switch>
+              {routes.map((prop, key) => {
+                const path = prop.path;
+                return (
+                  <Route
+                    path={path}
+                    component={prop.component}
+                    key={key}
+                    name
+                    players={players}
+                  />
+                );
+              })}
+              {/* <Redirect from="/admin" to="/admin/dashboard" /> */}
+            </Switch>
           </GridContainer>
         </div>
         {getRoute() ? <Footer /> : null}

@@ -25,7 +25,7 @@ import Spinner from "./Spinner.js";
 import styles from "assets/jss/material-dashboard-react/layouts/adminStyle.js";
 import "assets/css/material-dashboard-react.css";
 
-import bgImage from "assets/img/bg1.jpg";
+import bgImage from "assets/img/bg2.jpg";
 import logo from "assets/img/reactlogo.png";
 
 // react plugin for creating charts
@@ -207,10 +207,8 @@ export default function Admin({ ...rest }) {
             <GridContainer>
               <Card chart>
                 <CardHeader color="danger">
-                  <h2>
-                    The World's first <strong>NBA</strong>
-                  </h2>
-                  <h3> fantasy league on the Blockchain.</h3>
+                  <h2>The World's </h2>
+                  <h3>first fantasy league on the Blockchain.</h3>
                 </CardHeader>
               </Card>
               <GridItem xs={12} sm={12} md={6}>

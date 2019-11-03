@@ -25,7 +25,7 @@ import Spinner from "./Spinner.js";
 import styles from "assets/jss/material-dashboard-react/layouts/adminStyle.js";
 import "assets/css/material-dashboard-react.css";
 
-import bgImage from "assets/img/bg1.jpg";
+import bgImage from "assets/img/bg2.jpg";
 import logo from "assets/img/reactlogo.png";
 
 // react plugin for creating charts
@@ -164,33 +164,7 @@ export default function Admin({ ...rest }) {
           {...rest}
         />
         <div className={classes.content}>
-          {loading ? (
-            <GridContainer>
-              <Spinner></Spinner>
-            </GridContainer>
-          ) : (
-            <GridContainer>
-              <PlayerContainer name players={players}></PlayerContainer>
-            </GridContainer>
-          )}
           <GridContainer>
-            <Switch>
-              {routes.map((prop, key) => {
-                const path = prop.path;
-                return (
-                  <Route
-                    path={path}
-                    component={prop.component}
-                    key={key}
-                    name
-                    players={players}
-                  />
-                );
-              })}
-              {/* <Redirect from="/admin" to="/admin/dashboard" /> */}
-            </Switch>
-          </GridContainer>
-          <GridContainer class="main-home-content">
             <div className="dash-nav">
               <Button color="white" aria-label="edit" onClick={onClick}>
                 Load Players
@@ -204,16 +178,9 @@ export default function Admin({ ...rest }) {
                 Buy Loot Box
               </Button>
             </div>
+
             <GridContainer>
-              <Card chart>
-                <CardHeader color="danger">
-                  <h2>
-                    The World's first <strong>NBA</strong>
-                  </h2>
-                  <h3> fantasy league on the Blockchain.</h3>
-                </CardHeader>
-              </Card>
-              <GridItem xs={12} sm={12} md={6}>
+              <GridItem xs={12} sm={12} md={4}>
                 <Card chart>
                   <CardHeader color="success">
                     <ChartistGraph
@@ -241,7 +208,7 @@ export default function Admin({ ...rest }) {
                   </CardFooter>
                 </Card>
               </GridItem>
-              <GridItem xs={12} sm={12} md={6}>
+              <GridItem xs={12} sm={12} md={12}>
                 <Card chart>
                   <CardHeader color="warning">
                     <ChartistGraph
@@ -271,6 +238,97 @@ export default function Admin({ ...rest }) {
                 </Card>
               </GridItem>
             </GridContainer>
+            <GridContainer>
+              <GridItem xs={12} sm={12} md={6}>
+                <CustomTabs
+                  title="Tasks:"
+                  headerColor="primary"
+                  tabs={[
+                    {
+                      tabName: "Bugs",
+                      tabIcon: BugReport,
+                      tabContent: (
+                        <Tasks
+                          checkedIndexes={[0, 3]}
+                          tasksIndexes={[0, 1, 2, 3]}
+                          tasks={bugs}
+                        />
+                      )
+                    },
+                    {
+                      tabName: "Website",
+                      tabIcon: Code,
+                      tabContent: (
+                        <Tasks
+                          checkedIndexes={[0]}
+                          tasksIndexes={[0, 1]}
+                          tasks={website}
+                        />
+                      )
+                    },
+                    {
+                      tabName: "Server",
+                      tabIcon: Cloud,
+                      tabContent: (
+                        <Tasks
+                          checkedIndexes={[1]}
+                          tasksIndexes={[0, 1, 2]}
+                          tasks={server}
+                        />
+                      )
+                    }
+                  ]}
+                />
+              </GridItem>
+              <GridItem xs={12} sm={12} md={6}>
+                <Card>
+                  <CardHeader color="warning">
+                    <h4 className={classes.cardTitleWhite}>Employees Stats</h4>
+                    <p className={classes.cardCategoryWhite}>
+                      New employees on 15th September, 2016
+                    </p>
+                  </CardHeader>
+                  <CardBody>
+                    <Table
+                      tableHeaderColor="warning"
+                      tableHead={["ID", "Name", "Salary", "Country"]}
+                      tableData={[
+                        ["1", "Dakota Rice", "$36,738", "Niger"],
+                        ["2", "Minerva Hooper", "$23,789", "Curaçao"],
+                        ["3", "Sage Rodriguez", "$56,142", "Netherlands"],
+                        ["4", "Philip Chaney", "$38,735", "Korea, South"]
+                      ]}
+                    />
+                  </CardBody>
+                </Card>
+              </GridItem>
+            </GridContainer>
+          </GridContainer>
+          {loading ? (
+            <GridContainer>
+              <Spinner></Spinner>
+            </GridContainer>
+          ) : (
+            <GridContainer>
+              <PlayerContainer name players={players}></PlayerContainer>
+            </GridContainer>
+          )}
+          <GridContainer>
+            <Switch>
+              {routes.map((prop, key) => {
+                const path = prop.path;
+                return (
+                  <Route
+                    path={path}
+                    component={prop.component}
+                    key={key}
+                    name
+                    players={players}
+                  />
+                );
+              })}
+              {/* <Redirect from="/admin" to="/admin/dashboard" /> */}
+            </Switch>
           </GridContainer>
         </div>
         {getRoute() ? <Footer /> : null}

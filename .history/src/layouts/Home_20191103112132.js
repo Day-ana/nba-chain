@@ -208,9 +208,9 @@ export default function Admin({ ...rest }) {
               <Card chart>
                 <CardHeader color="danger">
                   <h2>
-                    The World's first <strong>NBA</strong>
+                    The World's <strong>NBA</strong>
                   </h2>
-                  <h3> fantasy league on the Blockchain.</h3>
+                  <h3>first fantasy league on the Blockchain.</h3>
                 </CardHeader>
               </Card>
               <GridItem xs={12} sm={12} md={6}>

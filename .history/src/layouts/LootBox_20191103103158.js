@@ -162,7 +162,7 @@ export default function Admin({ ...rest }) {
                       src="https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/202681.png"
                       alt="Avatar"
                     />
-                    <h4 className="dark-color">Kyrie Irving</h4>
+                    <h4 className="dark-color">Lyrie Irving</h4>
                   </div>
                 </div>
               </div>
