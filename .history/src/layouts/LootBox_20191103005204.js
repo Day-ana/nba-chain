@@ -19,11 +19,15 @@ import FixedPlugin from "components/FixedPlugin/FixedPlugin.js";
 import Button from "components/CustomButtons/Button.js";
 import routes from "routes.js";
 import Spinner from "./Spinner.js";
-
+import GridItem from "components/Grid/GridItem.js";
+import Card from "components/Card/Card.js";
+import CardHeader from "components/Card/CardHeader.js";
+import CardBody from "components/Card/CardBody.js";
 import styles from "assets/jss/material-dashboard-react/layouts/adminStyle.js";
 import "assets/css/material-dashboard-react.css";
-
+import CardFooter from "components/Card/CardFooter.js";
 import bgImage from "assets/img/bg1.jpg";
+import lootbox from "assets/img/loot-box.png";
 import logo from "assets/img/reactlogo.png";
 let ps;
 
@@ -40,22 +44,22 @@ export default function Admin({ ...rest }) {
   const [fixedClasses, setFixedClasses] = useState("dropdown show");
   const [mobileOpen, setMobileOpen] = useState(false);
 
-  const [players, setPlayers] = useState([]);
+  const [loot, setLoot] = useState([]);
   const [loading, setLoading] = useState(null);
   const loadBlockchainData = async () => {
     const web3 = new Web3(Web3.givenProvider || "http://localhost:8545");
     const accounts = await web3.eth.getAccounts();
     // setAccounts({ account: accounts[0] });
   };
-  const getPlayers = async () => {
+  const getLootBox = async () => {
     setLoading(true);
     const res = await axios.get(
-      `https://nameless-eyrie-55441.herokuapp.com/api/splayer`
+      `https://nameless-eyrie-55441.herokuapp.com/api/players`
     );
-
-    setPlayers(res.data);
+    setLoot(res.data);
     setLoading(false);
   };
+
   const handleImageClick = image => {
     setImage(image);
   };
@@ -80,14 +84,7 @@ export default function Admin({ ...rest }) {
       setMobileOpen(false);
     }
   };
-
-  const onClick = () => {
-    getPlayers();
-  };
-
-  const buyLootBox = () => {
-    getPlayers();
-  };
+  // initialize and destroy the PerfectScrollbar plugin
   useEffect(() => {
     loadBlockchainData();
     if (navigator.platform.indexOf("Win") > -1) {
@@ -107,6 +104,16 @@ export default function Admin({ ...rest }) {
       window.removeEventListener("resize", resizeFunction);
     };
   }, [mainPanel]);
+
+  const revealLoot = e => {
+    e.preventDefault();
+    console.log(e.target.parentNode.parentNode.firstChild);
+    const el = e.target.parentNode.parentNode.firstChild;
+    el.classList.add("active");
+    // element.classList.add("mystyle");
+
+    // e.target.parentNode.parentNode.firstChild.classlist.add("active");
+  };
 
   return (
     <div className={classes.wrapper}>
@@ -129,45 +136,54 @@ export default function Admin({ ...rest }) {
         />
         <div className={classes.content}>
           <GridContainer>
-            <div className="dash-nav">
-              <Button color="white" aria-label="edit" onClick={onClick}>
-                Load Players
-              </Button>
-
-              <Button
-                className="loot-gold"
-                aria-label="edit"
-                onClick={buyLootBox}
-              >
-                Buy Loot Box
-              </Button>
-            </div>
-          </GridContainer>
-          {loading ? (
-            <GridContainer>
-              <Spinner></Spinner>
-            </GridContainer>
-          ) : (
-            <GridContainer>
-              <PlayerContainer name players={players}></PlayerContainer>
-            </GridContainer>
-          )}
-          <GridContainer>
-            <Switch>
-              {routes.map((prop, key) => {
-                const path = prop.path;
-                return (
-                  <Route
-                    path={path}
-                    component={prop.component}
-                    key={key}
-                    name
-                    players={players}
-                  />
-                );
-              })}
-              {/* <Redirect from="/admin" to="/admin/dashboard" /> */}
-            </Switch>
+            <GridItem>
+              <div className="flip-card">
+                <div className="flip-card-inner">
+                  <div className="flip-card-front">
+                    <img src={lootbox} alt="Avatar" />
+                  </div>
+                  <div className="flip-card-back">
+                    <img
+                      src="https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/1626147.png"
+                      alt="Avatar"
+                    />
+                  </div>
+                </div>
+              </div>
+              <Button onClick={e => revealLoot(e)}>Reveal Loot!</Button>
+            </GridItem>
+            <GridItem>
+              <div className="flip-card">
+                <div className="flip-card-inner">
+                  <div className="flip-card-front">
+                    <img src={lootbox} alt="Avatar" />
+                  </div>
+                  <div className="flip-card-back">
+                    <img
+                      src="https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/202681.png"
+                      alt="Avatar"
+                    />
+                  </div>
+                </div>
+              </div>
+              <Button onClick={e => revealLoot(e)}>Reveal Loot!</Button>
+            </GridItem>
+            <GridItem>
+              <div className="flip-card">
+                <div className="flip-card-inner">
+                  <div className="flip-card-front">
+                    <img src={lootbox} alt="Avatar" />
+                  </div>
+                  <div className="flip-card-back">
+                    <img
+                      src="https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/202681.png"
+                      alt="Avatar"
+                    />
+                  </div>
+                </div>
+              </div>
+              <Button onClick={e => revealLoot(e)}>Reveal Loot!</Button>
+            </GridItem>
           </GridContainer>
         </div>
         {getRoute() ? <Footer /> : null}

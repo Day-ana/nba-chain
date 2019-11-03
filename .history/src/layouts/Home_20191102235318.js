@@ -23,7 +23,7 @@ import Spinner from "./Spinner.js";
 import styles from "assets/jss/material-dashboard-react/layouts/adminStyle.js";
 import "assets/css/material-dashboard-react.css";
 
-import bgImage from "assets/img/bg1.jpg";
+import bgImage from "assets/img/bg2.jpg";
 import logo from "assets/img/reactlogo.png";
 let ps;
 
